@@ -24,5 +24,5 @@ type TestStruct struct {
 
 func main() {
 	test := TestStruct{1, "hello struct", TestStruct1{2, "hello struct2"}}
-	goprint.P(test)
+	goprint.P("test tag", test)
 }
