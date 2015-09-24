@@ -6,34 +6,38 @@ import (
 	"strings"
 )
 
-func printStruct(t reflect.Type, v reflect.Value) {
+func printStruct(t reflect.Type, v reflect.Value, space int) {
 	fmt.Println("")
 	for i := 0; i < t.NumField(); i++ {
-		fmt.Print(strings.Repeat(" ", 0), t.Field(i).Name, ":")
+		fmt.Print(strings.Repeat(" ", space), t.Field(i).Name, ":")
 		value := v.Field(i)
-		if !value.CanInterface() {
-			fmt.Println(" is nil")
-		} else {
-			printVar(value.Interface())
-			fmt.Println("")
-		}
+		printValue(value, space)
+		fmt.Println("")
 	}
 }
 
-func printArraySlice(v reflect.Value) {
+func printArraySlice(v reflect.Value, space int) {
 	for j := 0; j < v.Len(); j++ {
-		printVar(v.Index(j).Interface())
+		printValue(v.Index(j), space)
 	}
 }
 
-func printMap(v reflect.Value) {
+func printMap(v reflect.Value, space int) {
 	for _, k := range v.MapKeys() {
-		printVar(k.Interface())
-		printVar(v.MapIndex(k).Interface())
+		printValue(k, space)
+		printValue(v.MapIndex(k), space)
 	}
 }
 
-func printVar(i interface{}) {
+func printValue(v reflect.Value, space int) {
+	if !v.CanInterface() {
+		fmt.Print(v)
+	} else {
+		printVar(v.Interface(), space)
+	}
+}
+
+func printVar(i interface{}, space int) {
 	t := reflect.TypeOf(i)
 	v := reflect.ValueOf(i)
 	if v.Kind() == reflect.Ptr {
@@ -42,7 +46,7 @@ func printVar(i interface{}) {
 	}
 	switch v.Kind() {
 	case reflect.Array:
-		printArraySlice(v)
+		printArraySlice(v, space+2)
 	case reflect.Chan:
 		fmt.Println("Chan")
 	case reflect.Func:
@@ -50,22 +54,27 @@ func printVar(i interface{}) {
 	case reflect.Interface:
 		fmt.Println("Interface")
 	case reflect.Map:
-		printMap(v)
+		printMap(v, space+2)
 	case reflect.Slice:
-		printArraySlice(v)
+		printArraySlice(v, space+2)
 	case reflect.Struct:
-		printStruct(t, v)
+		printStruct(t, v, space+2)
 	case reflect.UnsafePointer:
 		fmt.Println("UnsafePointer")
 	default:
-		fmt.Print(strings.Repeat(" ", 2), v.Interface())
+		if v.CanInterface() {
+			fmt.Print(strings.Repeat(" ", 2), v.Interface())
+		} else {
+			fmt.Print(strings.Repeat(" ", 2), v)
+		}
 	}
 }
 
 //输出任意变量的值
 func P(i interface{}) {
 	fmt.Println("====================================================")
-	printVar(i)
+	printVar(i, 0)
+	fmt.Println("")
 }
 
 //输出带标签的字符串值
