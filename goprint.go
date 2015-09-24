@@ -67,7 +67,9 @@ func printVar(i interface{}, space int) {
 	case reflect.UnsafePointer:
 		fmt.Println("UnsafePointer")
 	default:
-		if v.CanInterface() {
+		if !v.IsValid() {
+			fmt.Print("is Nil")
+		} else if v.CanInterface() {
 			fmt.Print(strings.Repeat(" ", 2), v.Interface())
 		} else {
 			fmt.Print(strings.Repeat(" ", 2), v)
