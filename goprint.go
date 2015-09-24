@@ -71,8 +71,8 @@ func printVar(i interface{}, space int) {
 }
 
 //print any variable
-func P(i interface{}) {
-	fmt.Println("====================================================")
+func P(tag string, i interface{}) {
+	fmt.Println("====================", tag, "=======================")
 	printVar(i, 0)
 	fmt.Println("")
 }
