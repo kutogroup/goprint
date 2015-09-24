@@ -42,7 +42,12 @@ func printVar(i interface{}, space int) {
 	v := reflect.ValueOf(i)
 	if v.Kind() == reflect.Ptr {
 		v = reflect.ValueOf(i).Elem()
-		t = v.Type()
+		if v.IsValid() {
+			t = v.Type()
+		} else {
+			fmt.Print("is nil")
+			return
+		}
 	}
 	switch v.Kind() {
 	case reflect.Array:
