@@ -70,21 +70,21 @@ func printVar(i interface{}, space int) {
 	}
 }
 
-//输出任意变量的值
+//print any variable
 func P(i interface{}) {
 	fmt.Println("====================================================")
 	printVar(i, 0)
 	fmt.Println("")
 }
 
-//输出带标签的字符串值
+//print log by tag
 func E(tag string, log string) {
 	fmt.Println("====================", tag, "=======================")
 	fmt.Println(log)
 	fmt.Println("")
 }
 
-//输出原始字符串值
+//print log string simply
 func V(log string) {
 	fmt.Println(log)
 }
