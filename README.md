@@ -22,9 +22,10 @@ type TestStruct struct {
 	Value string
 	St    TestStruct1
 }
-```
 
 func main() {
 	test := TestStruct{1, "hello struct", TestStruct1{2, "hello struct2"}}
 	goprint.P("test tag", test)
 }
+
+```
