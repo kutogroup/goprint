@@ -3,8 +3,9 @@
 GoLang Print API
 You can print any variables (string, struct, slice, map, ptr and more)
 
-Using example:
+Example:
 
+```go
 package main
 
 import (
@@ -21,6 +22,7 @@ type TestStruct struct {
 	Value string
 	St    TestStruct1
 }
+```
 
 func main() {
 	test := TestStruct{1, "hello struct", TestStruct1{2, "hello struct2"}}
